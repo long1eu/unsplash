@@ -15,11 +15,11 @@ class AppMiddleware {
 
   List<Middleware<AppState>> get items {
     return <Middleware<AppState>>[
-      TypedMiddleware<AppState, SearchPhotos>(_searchPhotos),
+      TypedMiddleware<AppState, SearchPhotos>(searchPhotos),
     ];
   }
 
-  Future<void> _searchPhotos(
+  Future<void> searchPhotos(
       Store<AppState> store, SearchPhotos action, NextDispatcher next) async {
     next(action);
     final List<UnsplashImage> result =

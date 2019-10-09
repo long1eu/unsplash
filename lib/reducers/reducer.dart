@@ -23,6 +23,6 @@ AppState _setImages(AppState state, SetImages action) {
 
 AppState _searchPhotos(AppState state, SearchPhotos action) {
   return state.rebuild((AppStateBuilder b) {
-    b.isLoading = true;
+    b..isLoading = true;
   });
 }
