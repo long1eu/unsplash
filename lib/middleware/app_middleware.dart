@@ -16,6 +16,7 @@ class AppMiddleware {
   List<Middleware<AppState>> get items {
     return <Middleware<AppState>>[
       TypedMiddleware<AppState, SearchPhotos>(searchPhotos),
+      TypedMiddleware<AppState, GetRandomPhotos>(getRandomPhotos),
     ];
   }
 
@@ -24,6 +25,15 @@ class AppMiddleware {
     next(action);
     final List<UnsplashImage> result =
         await _unsplashApi.searchPhotos(action.query);
+    store.dispatch(SetImages(result));
+  }
+
+  Future<void> getRandomPhotos(Store<AppState> store, GetRandomPhotos action,
+      NextDispatcher next) async {
+    next(action);
+
+    final List<UnsplashImage> result =
+        await _unsplashApi.randomPhoto(action.count);
     store.dispatch(SetImages(result));
   }
 }

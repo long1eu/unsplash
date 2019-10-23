@@ -12,9 +12,7 @@ abstract class User implements Built<User, UserBuilder> {
   factory User([void updates(UserBuilder b)]) = _$User;
 
   factory User.initialState() {
-    return _$User((b) {
-      b..age = 0;
-    });
+    return _$User((UserBuilder b) => b..age = 0);
   }
 
   User._();

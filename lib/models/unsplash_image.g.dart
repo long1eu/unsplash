@@ -26,6 +26,10 @@ class _$UnsplashImageSerializer implements StructuredSerializer<UnsplashImage> {
       'color',
       serializers.serialize(object.color,
           specifiedType: const FullType(String)),
+      'width',
+      serializers.serialize(object.width, specifiedType: const FullType(int)),
+      'height',
+      serializers.serialize(object.height, specifiedType: const FullType(int)),
       'urls',
       serializers.serialize(object.urls,
           specifiedType: const FullType(UnsplashImageUrls)),
@@ -55,6 +59,14 @@ class _$UnsplashImageSerializer implements StructuredSerializer<UnsplashImage> {
         case 'color':
           result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'width':
+          result.width = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'height':
+          result.height = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'urls':
           result.urls.replace(serializers.deserialize(value,
@@ -146,19 +158,32 @@ class _$UnsplashImage extends UnsplashImage {
   @override
   final String color;
   @override
+  final int width;
+  @override
+  final int height;
+  @override
   final UnsplashImageUrls urls;
   @override
   final int likes;
+  double __aspectRatio;
 
   factory _$UnsplashImage([void Function(UnsplashImageBuilder) updates]) =>
       (new UnsplashImageBuilder()..update(updates)).build();
 
-  _$UnsplashImage._({this.id, this.color, this.urls, this.likes}) : super._() {
+  _$UnsplashImage._(
+      {this.id, this.color, this.width, this.height, this.urls, this.likes})
+      : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('UnsplashImage', 'id');
     }
     if (color == null) {
       throw new BuiltValueNullFieldError('UnsplashImage', 'color');
+    }
+    if (width == null) {
+      throw new BuiltValueNullFieldError('UnsplashImage', 'width');
+    }
+    if (height == null) {
+      throw new BuiltValueNullFieldError('UnsplashImage', 'height');
     }
     if (urls == null) {
       throw new BuiltValueNullFieldError('UnsplashImage', 'urls');
@@ -167,6 +192,9 @@ class _$UnsplashImage extends UnsplashImage {
       throw new BuiltValueNullFieldError('UnsplashImage', 'likes');
     }
   }
+
+  @override
+  double get aspectRatio => __aspectRatio ??= super.aspectRatio;
 
   @override
   UnsplashImage rebuild(void Function(UnsplashImageBuilder) updates) =>
@@ -181,13 +209,19 @@ class _$UnsplashImage extends UnsplashImage {
     return other is UnsplashImage &&
         id == other.id &&
         color == other.color &&
+        width == other.width &&
+        height == other.height &&
         urls == other.urls &&
         likes == other.likes;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc($jc(0, id.hashCode), color.hashCode), urls.hashCode),
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc($jc(0, id.hashCode), color.hashCode), width.hashCode),
+                height.hashCode),
+            urls.hashCode),
         likes.hashCode));
   }
 
@@ -196,6 +230,8 @@ class _$UnsplashImage extends UnsplashImage {
     return (newBuiltValueToStringHelper('UnsplashImage')
           ..add('id', id)
           ..add('color', color)
+          ..add('width', width)
+          ..add('height', height)
           ..add('urls', urls)
           ..add('likes', likes))
         .toString();
@@ -214,6 +250,14 @@ class UnsplashImageBuilder
   String get color => _$this._color;
   set color(String color) => _$this._color = color;
 
+  int _width;
+  int get width => _$this._width;
+  set width(int width) => _$this._width = width;
+
+  int _height;
+  int get height => _$this._height;
+  set height(int height) => _$this._height = height;
+
   UnsplashImageUrlsBuilder _urls;
   UnsplashImageUrlsBuilder get urls =>
       _$this._urls ??= new UnsplashImageUrlsBuilder();
@@ -229,6 +273,8 @@ class UnsplashImageBuilder
     if (_$v != null) {
       _id = _$v.id;
       _color = _$v.color;
+      _width = _$v.width;
+      _height = _$v.height;
       _urls = _$v.urls?.toBuilder();
       _likes = _$v.likes;
       _$v = null;
@@ -255,7 +301,12 @@ class UnsplashImageBuilder
     try {
       _$result = _$v ??
           new _$UnsplashImage._(
-              id: id, color: color, urls: urls.build(), likes: likes);
+              id: id,
+              color: color,
+              width: width,
+              height: height,
+              urls: urls.build(),
+              likes: likes);
     } catch (_) {
       String _$failedField;
       try {

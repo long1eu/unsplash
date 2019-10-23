@@ -10,10 +10,8 @@ import 'package:unsplash/models/serializers.dart';
 
 part 'unsplash_image.g.dart';
 
-abstract class UnsplashImage
-    implements Built<UnsplashImage, UnsplashImageBuilder> {
-  factory UnsplashImage([void Function(UnsplashImageBuilder b) updates]) =
-      _$UnsplashImage;
+abstract class UnsplashImage implements Built<UnsplashImage, UnsplashImageBuilder> {
+  factory UnsplashImage([void Function(UnsplashImageBuilder b) updates]) = _$UnsplashImage;
 
   factory UnsplashImage.fromJson(Map<dynamic, dynamic> json) =>
       serializers.deserializeWith(serializer, json);
@@ -24,6 +22,16 @@ abstract class UnsplashImage
 
   String get color;
 
+  int get width;
+
+  int get height;
+
+  @memoized
+  double get aspectRatio => width / height;
+
+  @memoized
+  bool get isLandscape => aspectRatio < 1;
+
   UnsplashImageUrls get urls;
 
   int get likes;
@@ -33,10 +41,8 @@ abstract class UnsplashImage
   static Serializer<UnsplashImage> get serializer => _$unsplashImageSerializer;
 }
 
-abstract class UnsplashImageUrls
-    implements Built<UnsplashImageUrls, UnsplashImageUrlsBuilder> {
-  factory UnsplashImageUrls(
-          [void Function(UnsplashImageUrlsBuilder b) updates]) =
+abstract class UnsplashImageUrls implements Built<UnsplashImageUrls, UnsplashImageUrlsBuilder> {
+  factory UnsplashImageUrls([void Function(UnsplashImageUrlsBuilder b) updates]) =
       _$UnsplashImageUrls;
 
   factory UnsplashImageUrls.fromJson(Map<dynamic, dynamic> json) =>
@@ -56,6 +62,5 @@ abstract class UnsplashImageUrls
 
   Map<String, dynamic> get json => serializers.serializeWith(serializer, this);
 
-  static Serializer<UnsplashImageUrls> get serializer =>
-      _$unsplashImageUrlsSerializer;
+  static Serializer<UnsplashImageUrls> get serializer => _$unsplashImageUrlsSerializer;
 }

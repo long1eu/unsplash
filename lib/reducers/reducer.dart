@@ -11,6 +11,7 @@ import 'package:unsplash/models/unsplash_image.dart';
 final Reducer<AppState> reducer = combineReducers<AppState>(<Reducer<AppState>>[
   TypedReducer<AppState, SetImages>(_setImages),
   TypedReducer<AppState, SearchPhotos>(_searchPhotos),
+  TypedReducer<AppState, GetRandomPhotos>(_getRandomPhotos),
 ]);
 
 AppState _setImages(AppState state, SetImages action) {
@@ -22,6 +23,12 @@ AppState _setImages(AppState state, SetImages action) {
 }
 
 AppState _searchPhotos(AppState state, SearchPhotos action) {
+  return state.rebuild((AppStateBuilder b) {
+    b..isLoading = true;
+  });
+}
+
+AppState _getRandomPhotos(AppState state, GetRandomPhotos action) {
   return state.rebuild((AppStateBuilder b) {
     b..isLoading = true;
   });

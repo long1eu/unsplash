@@ -10,6 +10,12 @@ class SearchPhotos {
   final String query;
 }
 
+class GetRandomPhotos {
+  const GetRandomPhotos(this.count);
+
+  final int count;
+}
+
 class SetImages {
   const SetImages(this.images);
 
